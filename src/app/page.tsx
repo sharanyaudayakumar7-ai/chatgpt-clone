@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ChatMessage } from "@/types/chat";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -12,6 +14,12 @@ export default function ChatPage() {
   ]);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
+
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isSending]);
 
   const sendMessage = async () => {
     if (!input.trim() || isSending) return;
@@ -35,7 +43,6 @@ export default function ChatPage() {
 
       const data = await res.json();
 
-      // API always returns { reply: ChatMessage }
       setMessages((prev) => [...prev, data.reply as ChatMessage]);
     } catch (e) {
       setMessages((prev) => [
@@ -59,10 +66,11 @@ export default function ChatPage() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50 flex flex-col">
+      
       <header className="border-b border-neutral-800 px-4 py-3">
         <h1 className="text-lg font-semibold">ChatGPT Clone 🤖</h1>
         <p className="text-xs text-neutral-400">
-          Fake AI for now — real one soon!
+          Free AI powered by OpenRouter 🚀
         </p>
       </header>
 
@@ -75,13 +83,19 @@ export default function ChatPage() {
             }`}
           >
             <div
-              className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
+              className={`max-w-[80%] rounded-2xl px-4 py-3 text-[15px] leading-relaxed ${
                 m.role === "user"
                   ? "bg-emerald-600 text-white"
-                  : "bg-neutral-800 text-neutral-50"
+                  : "bg-neutral-800 text-neutral-100"
               }`}
             >
-              {m.content}
+              {m.role === "assistant" ? (
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {m.content}
+                </ReactMarkdown>
+              ) : (
+                m.content
+              )}
             </div>
           </div>
         ))}
@@ -89,12 +103,14 @@ export default function ChatPage() {
         {isSending && (
           <div className="text-neutral-400 text-sm">Thinking…</div>
         )}
+
+        <div ref={bottomRef} />
       </main>
 
       <footer className="border-t border-neutral-800 p-3 flex gap-2">
         <textarea
           rows={2}
-          className="flex-1 bg-neutral-900 border border-neutral-700 rounded-lg p-2 text-sm outline-none"
+          className="flex-1 bg-neutral-900 border border-neutral-700 rounded-lg p-2 text-sm outline-none resize-none"
           placeholder="Send a message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}

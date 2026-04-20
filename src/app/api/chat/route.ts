@@ -3,6 +3,11 @@ import type { ChatMessage } from "@/types/chat";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    "HTTP-Referer": "http://localhost:3000", // required by OpenRouter
+    "X-Title": "ChatGPT Clone", // optional but recommended
+  },
 });
 
 export async function POST(req: Request) {
@@ -17,9 +22,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // --- Call OpenAI ---
+    // 🔥 OpenRouter call
     const completion = await client.chat.completions.create({
-      model: "gpt-4.1-mini", // you can change this later
+     model: "meta-llama/llama-3-8b-instruct", // ✅ FREE model
       messages: messages.map((m) => ({
         role: m.role,
         content: m.content,
@@ -31,15 +36,12 @@ export async function POST(req: Request) {
     let content: string;
 
     if (!answer) {
-      content = "Sorry da, the model didn't send any answer.";
+      content = "Sorry da, no response received.";
     } else if (typeof answer.content === "string") {
-      // Simple string content
       content = answer.content;
     } else if (Array.isArray(answer.content)) {
-      // Content is an array of parts (text, images, etc.)
       content = (answer.content as any[])
         .map((part: any) => {
-          // most common case: { type: "text", text: "..." }
           if (typeof part === "string") return part;
           if (typeof part.text === "string") return part.text;
           if (part.type === "text" && typeof part.text?.value === "string") {
@@ -50,11 +52,10 @@ export async function POST(req: Request) {
         .join("");
 
       if (!content.trim()) {
-        content =
-          "Sorry da, I got a weird formatted answer from OpenAI and couldn't read it properly.";
+        content = "Got a weird response format 😅";
       }
     } else {
-      content = "Sorry da, I couldn't understand the response from OpenAI.";
+      content = "Couldn't understand the response 😭";
     }
 
     const reply: ChatMessage = {
@@ -64,21 +65,11 @@ export async function POST(req: Request) {
 
     return Response.json({ reply });
   } catch (err: any) {
-    console.error("OPENAI ERROR:", err);
-
-    // Handle quota / billing error nicely
-    if (err?.status === 429 || err?.code === "insufficient_quota") {
-      const reply: ChatMessage = {
-        role: "assistant",
-        content:
-          "Ayyo da 😅 Your OpenAI quota is finished! Add billing or wait for credits to refresh, then I'll answer for real.",
-      };
-      return Response.json({ reply });
-    }
+    console.error("OPENROUTER ERROR:", err);
 
     const reply: ChatMessage = {
       role: "assistant",
-      content: "Oops da, something went wrong talking to OpenAI 😭",
+      content: "Oops da, something went wrong 😭",
     };
 
     return Response.json({ reply }, { status: 500 });

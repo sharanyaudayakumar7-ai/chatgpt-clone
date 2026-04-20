@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
+/* 🎨 Theme colors */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
+/* Tailwind theme mapping */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
+/* 🌙 Dark mode (default clean look) */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +20,49 @@
   }
 }
 
+/* 🧠 GLOBAL FONT + SMOOTH TEXT */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  /* 🔥 Modern clean font stack */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Inter", sans-serif;
+
+  /* ✨ Better readability */
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+
+  /* 🎯 smoother rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 💬 Better paragraph spacing */
+p {
+  margin-bottom: 0.5rem;
+}
+
+/* 📝 Better list spacing (important for AI responses) */
+ul {
+  padding-left: 1.2rem;
+  margin-top: 0.3rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+/* ✨ Scrollbar styling (optional but nice) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
