@@ -1,85 +1,135 @@
-**🤖 ChatGPT Clone**
+# 🤖 ChatGPT Clone (Next.js + OpenRouter)
 
-A ChatGPT-inspired conversational AI web application that allows users to interact with an AI model through a modern chat interface.
-The application provides real-time responses and demonstrates how large language models can be integrated into web applications using modern frontend frameworks.
+A modern ChatGPT-style AI chat application built using **Next.js**, **TypeScript**, and **Tailwind CSS**.
+This project allows users to interact with an AI model in real-time with a clean and responsive UI.
 
-This project was built to explore AI-powered chat interfaces, API integration, and modern web development using Next.js.
+---
 
-**✨ Features**
+## ✨ Features
 
-💬 Interactive Chat Interface – Clean and intuitive chat UI similar to ChatGPT
+* 💬 Interactive Chat Interface (ChatGPT-like UI)
+* ⚡ Real-time AI responses using OpenRouter
+* 🧠 Supports free AI models (LLaMA 3, OpenChat, etc.)
+* ✨ Markdown rendering (bold, lists, headings, code)
+* 📜 Auto-scrolling chat experience
+* 🎨 Clean and modern UI with Tailwind CSS
+* 📱 Responsive design (mobile + desktop)
 
-⚡ Real-Time AI Responses – Generates responses dynamically using AI APIs
+---
 
-🎨 Responsive Design – Works smoothly across desktop and mobile screens
+## 🛠️ Tech Stack
 
-🧩 Component-Based Architecture – Built using reusable React components
+### Frontend
 
-🔗 AI API Integration – Easily configurable to work with different AI providers
+* ⚛️ Next.js (App Router)
+* ⚛️ React
+* 🟦 TypeScript
 
-🛠 Tech Stack
+### AI Integration
 
-**Frontend**
+* 🤖 OpenRouter API (LLM provider)
 
-⚛️ Next.js
+### Styling
 
-⚛️ React
+* 🎨 Tailwind CSS
 
-🟨 JavaScript / TypeScript
+---
 
-**AI Integration**
+## 📂 Project Structure
 
-🤖 AI API (OpenAI / OpenRouter / other providers)
+```
+src/
+ ├── app/
+ │   ├── api/chat/route.ts   # AI API route
+ │   ├── page.tsx            # Chat UI
+ │   ├── layout.tsx          # Layout
+ │   └── globals.css         # Styling
+ └── types/
+     └── chat.ts             # Message types
+```
 
-**Styling**
+---
 
-🎨 CSS / Tailwind CSS (depending on what you used)
+## ⚙️ Setup Instructions
 
+### 1️⃣ Clone the repository
 
-
-**⚙️ Installation**
-
-Follow these steps to run the project locally.
-
-1️⃣ Clone the repository
-git clone https://github.com/yourusername/chatgpt-clone.git
-2️⃣ Navigate into the project directory
+```bash
+git clone https://github.com/sharanyaudayakumar7-ai/chatgpt-clone.git
 cd chatgpt-clone
-3️⃣ Install dependencies
+```
+
+### 2️⃣ Install dependencies
+
+```bash
 npm install
-4️⃣ Run the development server
+```
+
+### 3️⃣ Add environment variables
+
+Create a `.env.local` file:
+
+```env
+OPENAI_API_KEY=your_openrouter_api_key
+```
+
+👉 Get your API key from: https://openrouter.ai
+
+---
+
+### 4️⃣ Run the app
+
+```bash
 npm run dev
-5️⃣ Open the application
+```
 
-Visit the following in your browser: http://localhost:3000
+Open in browser:
 
-**🚀 Future Improvements**
+```
+http://localhost:3000
+```
 
-💾 Chat history storage
+---
 
-🔐 User authentication
+## 🧪 Example Prompts
 
-🌙 Dark mode support
+* What is Artificial Intelligence?
+* Explain machine learning in simple terms
+* Write a short story about a robot
+* Give a React example
 
-📊 Message analytics and tracking
+---
 
-🤖 Support for multiple AI models
+## 🚀 Live Demo
 
+👉 https://chatgpt-clone-ten-pi.vercel.app
 
-**📚 Learning Outcomes**
+---
 
-Through this project, I explored:
+## 📚 What I Learned
 
-Building AI-powered web applications
+* Building AI-powered web applications
+* Integrating LLM APIs (OpenRouter)
+* Rendering Markdown in React
+* Designing chat-based UI systems
+* Using Next.js App Router effectively
 
-Integrating large language model APIs
+---
 
-Designing chat-based user interfaces
+## 🔮 Future Improvements
 
-Developing applications using Next.js and React
+* ⚡ Streaming responses (typing effect)
+* 💾 Chat history storage
+* 📋 Copy button for code blocks
+* 🔐 User authentication
+* 🌍 Multi-model support
 
+---
 
-**📄 License**
+## 🙌 Author
 
-This project is licensed under the MIT License.
+**Sharanya Udayakumar**
+GitHub: https://github.com/sharanyaudayakumar7-ai
+
+---
 
